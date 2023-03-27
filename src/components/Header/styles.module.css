@@ -6,3 +6,27 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.nav__list {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 40px;
+  list-style-type: none;
+}
+
+.nav__list .list__item {
+  display: flex;
+  text-decoration: none;
+  text-transform: uppercase;
+  align-items: baseline;
+}
+
+.list__item.active {
+  color: #f8f3f3;
+}
+
+a:hover {
+  color: #edecec;
+  transition: all 0.30s;
+}

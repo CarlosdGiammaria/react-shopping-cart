@@ -2,33 +2,22 @@ import React from 'react'
 import { useStore } from 'killa'
 
 import { store } from '../../store'
+import { addProductToCart } from '../../utils/mapping'
 import styles from './styles.module.css'
 
+
 function Product({ id, name, image, quantity, price }) {
-  const { state: cart, setState } = useStore(store, (state) => state.cart)
+  const { state: cart, setState } = useStore(store, (state) => state.cart.getShoppingCart())
 
   const handleAdd = () => {
-    const _product = cart.find((product) => product.id === id)
-    let newCart = []
+    let product = { id, name, image, quantity, price }
 
-    if (_product) {
-      newCart = cart.map(product => {
-        if (product.id === _product.id) {
-          product.quantity += 1
-        }
-        return {
-          ...product
-        }
-      })
-    } else {
-      newCart.push({ id, name, image, price, quantity: 1 })
-    }
-
+    const updatedShoppingCart = addProductToCart(cart, product)    
 
     setState((state) => {
       return {
         ...state,
-        cart: newCart
+        cart: updatedShoppingCart
       }
     })
   }

@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Hind', sans-serif;
-  font-family: 'Red Hat Display', sans-serif;
+  font-family: 'Unbounded', cursive;
 }
 
 html,
@@ -17,32 +16,6 @@ body {
 .icon {
   font-size: 19px;
 }
-
-.nav__list {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  gap: 40px;
-  list-style-type: none;
-}
-
-.nav__list .list__item {
-  display: flex;
-  text-decoration: none;
-  text-transform: uppercase;
-  align-items: baseline;
-}
-
-.list__item.active {
-  color: #f8f3f3;
-}
-
-a:hover {
-  color: #edecec;
-  transition: all 0.30s;
-}
-
-
 
 /* cart */
 .shopping-cart {

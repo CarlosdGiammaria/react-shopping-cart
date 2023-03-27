@@ -21,7 +21,11 @@ export class ShoppingCart {
       if (productInsideCart.quantity + quantity > product.quantity) {
         return false
       }
-      this.products[index].quantity += quantity
+
+      productInsideCart = {
+        ...productInsideCart,
+        quantity: (productInsideCart.quantity += quantity),
+      }
     } else {
       this.products.push({ ...product, quantity })
     }
@@ -55,10 +59,10 @@ export class ShoppingCart {
     this.products = []
   }
 
-  buy(ca) {
+  buy(cb) {
     let success
-    if (ca) {
-      success = ca({
+    if (cb) {
+      success = cb({
         products: this.products,
         total: this.totalPrice(),
       })

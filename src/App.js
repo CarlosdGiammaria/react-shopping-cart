@@ -8,7 +8,7 @@ import { store } from './store'
 import './App.css'
 
 function App() {
-  const { state } = useStore(store, (state) => state.inventory)
+  const { state } = useStore(store, (state) => state.inventory.articles)
 
   return (
     <div className="App">
