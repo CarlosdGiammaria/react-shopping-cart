@@ -8,13 +8,27 @@ import { store } from './store'
 import './App.css'
 
 function App() {
-  const { state } = useStore(store, (state) => state.inventory.articles)
+  const { state } = useStore(store, (state) => {
+    return {
+      products: state.inventory.articles,
+      filter: state.filter,
+    }
+  })
+
+  console.log(state)
+  let products = state.products
+
+  if (state.filter !== 'ALL') {
+    products = state.products.filter(
+      (product) => product.category === state.filter
+    )
+  }
 
   return (
     <div className="App">
       <Header />
       <Layout>
-        {state.map((element) => {
+        {products.map((element) => {
           return (
             <Product
               key={element.id}

@@ -1,7 +1,7 @@
 import React from 'react'
 
 function CartProduct({id,name,image,quantity,price}) {
- 
+
   return (
     <div className='list__items'>
       <div className='shopping-cart__card js-cart-item' data-id={id}>
@@ -13,7 +13,7 @@ function CartProduct({id,name,image,quantity,price}) {
           <span><i className="fa-regular fa-money-bill-1"></i>{price}</span>
           <span><i className="fa-solid fa-boxes-stacked"></i>{quantity}</span>
           <div className="product__action">
-            <button className="btn js-add-quntity">
+            <button className="btn">
               <i className="fa-solid fa-circle-plus icon"></i>
             </button>
             <button className="btn js-delete-quntity">

@@ -7,4 +7,5 @@ import { ShoppingCart } from '../utils/ShoppingCart'
 export const store = killa({
   inventory: new Inventory(data),
   cart: new ShoppingCart(),
+  filter: 'ALL',
 })
