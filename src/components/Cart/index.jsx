@@ -1,34 +1,44 @@
 import React from 'react'
 import { useStore } from 'killa'
 import CartProduct from './CartProduct'
-import { store } from '../../store'
-
+import { shoppingCartStore, inventoryStore } from '../../store'
 
 function Cart( { handleOpenSlider} ) {
-  const { state, setState } = useStore(store, (state) => {
-    return {
-      products: state.cart.getShoppingCart(),
-      total: state.cart.totalPrice(),
-      inventory: state.inventory
+  const {
+      state: cart, 
+      setState: setCartState 
+    } = useStore(shoppingCartStore,
+    (state) => {
+      return {
+      products: state.products,
+      total: state.totalPrice(),
     }
   })
 
+  const {
+    state: inventory,
+    setState 
+  } = useStore(inventoryStore, (state) => state)
 
   const handleBuy = () => {
-    let items = state.products
-    let inventory = state.inventory
-
-    items.forEach((product) => {
-      return inventory.deleteQuantity(product.id, product.quantity)
-    })
-
-
     setState((state) => {
+      let items = cart.products
+  
+      items.forEach((product) => {
+        return inventory.deleteQuantity(product.id, product.quantity)
+      })
+
       return {
         ...state,
-        inventory
+        articles: inventory.articles,
       }
     })
+
+    setCartState(() => {
+      return {
+        products: []
+      }
+    }) 
   }
 
   return (
@@ -42,7 +52,7 @@ function Cart( { handleOpenSlider} ) {
 
       <div className="shopping-cart__list">
         {
-          state.products.map((element) => {
+          cart.products.map((element) => {
             return (
               <CartProduct
                 key={element.id}
@@ -57,7 +67,7 @@ function Cart( { handleOpenSlider} ) {
         }
       </div>
       <div className="shopping-cart__payable-value">
-        <span>${state.total}</span>
+        <span>${cart.total}</span>
         <button className="btn btn--success" onClick={handleBuy}>
           <i className="fa-solid fa-cart-arrow-down icon"/>
         </button>

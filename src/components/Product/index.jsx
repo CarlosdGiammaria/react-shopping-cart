@@ -1,26 +1,30 @@
 import React from 'react'
 import { useStore } from 'killa'
 
-import { store } from '../../store'
+import { shoppingCartStore } from '../../store'
 import styles from './styles.module.css'
 
 
 function Product({ id, name, image, quantity, price }) {
-  const { 
-    state: cart, 
-    setState
-  } = useStore(store, (state) => state.cart)
-
+  const { setState } = useStore(shoppingCartStore, (state) => {
+    return {
+      products: state.products,
+      addProductCart: state.addProductCart
+    }
+  })
+  
   const handleAdd = () => {
     let product = { id, name, image, quantity, price }
-
-    cart.addProductCart(product, 1)
-
+    
     setState((state) => {
-      return {
+      state.addProductCart(product, 1)
+
+      const newState = {
         ...state,
-        cart
+        products: state.products,
       }
+
+      return newState
     })
   }
   

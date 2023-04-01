@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useStore } from 'killa'
+
+import { inventoryStore, shoppingCartStore } from '../../store'
 import Cart from '../Cart'
-import { store } from '../../store'
 import styles from './styles.module.css'
 
 const CATEGORIES_MAP = {
@@ -12,22 +13,17 @@ const CATEGORIES_MAP = {
 
 const  Header = () => {
   const [slider, setSlider] = useState(false)
-  
-  const { state, setState } = useStore(store, (state) => {
-    return {
-      counterItemsOfCart: state.cart.getItems(),
-      categories: state.inventory.getCategories(),
-    }
-  })
+
+  const { state: cart } = useStore(shoppingCartStore)
+  const { state: categories, setState } = useStore(inventoryStore, (state) => state.getCategories())
 
   const handleOpenSlider = () => {
     setSlider(!slider)
   }
 
   const handleFilter = (category) => {
-    setState((state) => {
+    setState(() => {
       return {
-        ...state,
         filter: category
       }
     })
@@ -53,11 +49,11 @@ const  Header = () => {
                 handleFilter('ALL')
               }}
             >
-                Products
+              Products
             </a>
           </li>
           {
-            state.categories.map((category, i) => {
+            categories.map((category, i) => {
               return (
                 <li key={i}>
                   <a
@@ -79,7 +75,7 @@ const  Header = () => {
       </nav>
       
       <div className="btn" onClick={handleOpenSlider}>
-        <span className="">{state.counterItemsOfCart}</span>
+        <span className="">{cart.getItems()}</span>
         <i className="fa-sharp fa-solid fa-cart-shopping icon"/>
       </div>
       {

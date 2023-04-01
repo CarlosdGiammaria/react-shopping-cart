@@ -3,19 +3,18 @@ import { useStore } from 'killa'
 import Header from './components/Header'
 import Product from './components/Product'
 import Layout from './components/Layout'
-import { store } from './store'
+import { inventoryStore } from './store'
 
 import './App.css'
 
 function App() {
-  const { state } = useStore(store, (state) => {
+  const { state } = useStore(inventoryStore, (state) => {
     return {
-      products: state.inventory.articles,
+      products: state.articles,
       filter: state.filter,
     }
   })
 
-  console.log(state)
   let products = state.products
 
   if (state.filter !== 'ALL') {
