@@ -1,36 +1,17 @@
 import React, { useState } from 'react'
 import { useStore } from 'killa'
-import Cart from '../Cart'
-import { store } from '../../store'
-import styles from './styles.module.css'
 
-const CATEGORIES_MAP = {
-  'HOME_CATEGORY': 'Home use',
-  'PERSONAL_USE_CATEGORY': 'Personal Use',
-  'FOOD_CATEGORY': 'Food',
-}
+import { shoppingCartStore } from '../../store'
+import Cart from '../Cart'
+import NavBar from '../Menu'
+import styles from './styles.module.css'
 
 const  Header = () => {
   const [slider, setSlider] = useState(false)
-  
-  const { state, setState } = useStore(store, (state) => {
-    return {
-      counterItemsOfCart: state.cart.getItems(),
-      categories: state.inventory.getCategories(),
-    }
-  })
+  const [cart] = useStore(shoppingCartStore)
 
   const handleOpenSlider = () => {
     setSlider(!slider)
-  }
-
-  const handleFilter = (category) => {
-    setState((state) => {
-      return {
-        ...state,
-        filter: category
-      }
-    })
   }
 
   return (
@@ -41,45 +22,9 @@ const  Header = () => {
           Always handling the best products and prices
         </h5>
       </div>
-
-      <nav className="nav ">
-        <ul className={styles.nav__list}>
-          <li>
-            <a
-              href='/'
-              className={styles.list__item}
-              onClick={(e) => {
-                e.preventDefault()
-                handleFilter('ALL')
-              }}
-            >
-                Products
-            </a>
-          </li>
-          {
-            state.categories.map((category, i) => {
-              return (
-                <li key={i}>
-                  <a
-                    href='/'
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleFilter(category)
-                    }}
-                    className={styles.list__item}
-                  >
-                    {CATEGORIES_MAP[category]}
-                  </a>
-                </li>
-              )
-            })
-          
-          }
-        </ul>
-      </nav>
-      
-      <div className="btn" onClick={handleOpenSlider}>
-        <span className="">{state.counterItemsOfCart}</span>
+      <NavBar/>
+      <div className="btn cart " onClick={handleOpenSlider}>
+        <span className="">{ cart.getItems() }</span>
         <i className="fa-sharp fa-solid fa-cart-shopping icon"/>
       </div>
       {
