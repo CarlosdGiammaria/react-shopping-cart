@@ -1,18 +1,20 @@
 import React from 'react'
 import { useStore } from 'killa'
+import classNames from 'classnames'
 
 import { shoppingCartStore } from '../../store'
 import styles from './styles.module.css'
 
 
 function Product({ id, name, image, quantity, price }) {
-  const { setState } = useStore(shoppingCartStore, (state) => {
+  const [_, setState] = useStore(shoppingCartStore, (state) => {
     return {
       products: state.products,
       addProductCart: state.addProductCart
     }
   })
-  
+  const available = Boolean(quantity)
+
   const handleAdd = () => {
     let product = { id, name, image, quantity, price }
     
@@ -27,19 +29,29 @@ function Product({ id, name, image, quantity, price }) {
       return newState
     })
   }
-  
+  const productCard = classNames({
+    [styles.product__card]: true,
+    [styles['product__card--disabled']]: !available
+  })
+  const btnAdd = classNames({
+    'btn--success':available,
+    'btn--disabled':!available
+  })
+
   return (
-    <div className={styles.product__card}>
+    <div className={productCard}>
+
       <div className={styles.products__img}>
-        <img src= {image} alt=''/>
+        <img src= {image} alt='' />
         <div className={styles.products__actions}>
           <button
-            className='btn btn--full btn--success'
+            className={`btn btn--full ${btnAdd}`}
             data-product-id={id}
             onClick={handleAdd}
+            disabled={!available}
           >
-            Add to Cart
-            <i className='fa-solid fa-cart-plus'/>
+            {  available ? 'Add to cart' : 'SOLD OUT' }
+            {  available &&  <i className='fa-solid fa-cart-plus'/>}
           </button>
         </div>
       </div>

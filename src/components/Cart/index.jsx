@@ -4,21 +4,16 @@ import CartProduct from './CartProduct'
 import { shoppingCartStore, inventoryStore } from '../../store'
 
 function Cart( { handleOpenSlider} ) {
-  const {
-      state: cart, 
-      setState: setCartState 
-    } = useStore(shoppingCartStore,
+  const [cart, setCartState] = useStore(shoppingCartStore,
     (state) => {
       return {
       products: state.products,
       total: state.totalPrice(),
+      deleteQuantityById: state.deleteQuantityById,
     }
   })
 
-  const {
-    state: inventory,
-    setState 
-  } = useStore(inventoryStore, (state) => state)
+  const [inventory, setState] = useStore(inventoryStore, (state) => state)
 
   const handleBuy = () => {
     setState((state) => {
@@ -41,6 +36,17 @@ function Cart( { handleOpenSlider} ) {
     }) 
   }
 
+  const handleDeleteQuantity = (productId, quantity) => {
+    setCartState((cart) => {
+      cart.deleteQuantityById(productId, quantity)
+      const newState = {
+        ...cart,
+        products: cart.products,
+      }
+      return newState
+    })
+  }
+
   return (
     <div className="shopping-cart">
       <div className="shopping-cart__top">
@@ -61,6 +67,7 @@ function Cart( { handleOpenSlider} ) {
                 image={element.image}
                 quantity={element.quantity}
                 price={element.price}
+                deleteQuantity={handleDeleteQuantity}
               />
             )
           })

@@ -2,36 +2,24 @@ import React from 'react'
 import { useStore } from 'killa'
 import { shoppingCartStore } from '../../store'
 
-function CartProduct({ id, name, image, quantity, price }) {
-  const { setState } = useStore(shoppingCartStore, (state) => {
+function CartProduct(
+  { 
+    id,
+    name, 
+    image, 
+    quantity, 
+    price , 
+    deleteQuantity, 
+  }) 
+{
+
+  const [_, setState] = useStore(shoppingCartStore, (state) => {
     return {
       products: state.products,
-      deleteQuantityById: state.deleteQuantityById,
       addProductCart: state.addProductCart
     }
   })
 
-
-  const handleDeleteQuantity = (id, quantity) => {
-    setState((state) => {
-      state.deleteQuantityById(id, quantity)
-      const newState = {
-        ...state,
-        products: state.products,
-      }
-      return newState
-    })
-  }
-  // const handleAddQuantity = (id, quantity) => {
-  //   setState((state) => {
-  //     state.addProductCart(id, quantity)
-  //     const newState = {
-  //       ...state,
-  //       products: state.products,
-  //     }
-  //     return newState
-  //   })
-  // }
   const handleAddQuantity = () => {
     setState((state) => {
       const index = state.products.findIndex((product) => product.id === id)
@@ -55,9 +43,7 @@ function CartProduct({ id, name, image, quantity, price }) {
       return newState
     })
   }
-
   
-
   return (
     <div className='list__items'>
       <div className='shopping-cart__card js-cart-item' data-id={id}>
@@ -80,7 +66,7 @@ function CartProduct({ id, name, image, quantity, price }) {
             </button>
             <button
               className='btn js-delete-quntity'
-              onClick={() => handleDeleteQuantity(id, 1)}
+              onClick={() => deleteQuantity(id, 1)}
             >
               <i className='fa-solid fa-circle-minus icon'></i>
             </button>

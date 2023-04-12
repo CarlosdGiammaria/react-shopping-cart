@@ -3,7 +3,6 @@
   height: 390px;
   display: flex;
   flex-direction: column;
-  align-content: center;
 }
 
 .products__img {
@@ -45,4 +44,10 @@
   align-items: center;
   font-size: 15px;
   text-transform: uppercase;
+}
+
+
+.product__card.product__card--disabled {
+  mix-blend-mode: multiply;
+  filter: grayscale(100%);
 }

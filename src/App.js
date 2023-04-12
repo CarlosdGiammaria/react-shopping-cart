@@ -1,46 +1,27 @@
-import { useStore } from 'killa'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 
 import Header from './components/Header'
-import Product from './components/Product'
 import Layout from './components/Layout'
-import { inventoryStore } from './store'
 
 import './App.css'
+import NotFound from './pages/NotFound'
+import Home from './pages/Home'
 
 function App() {
-  const { state } = useStore(inventoryStore, (state) => {
-    return {
-      products: state.articles,
-      filter: state.filter,
-    }
-  })
-
-  let products = state.products
-
-  if (state.filter !== 'ALL') {
-    products = state.products.filter(
-      (product) => product.category === state.filter
-    )
-  }
-
   return (
-    <div className="App">
-      <Header />
-      <Layout>
-        {products.map((element) => {
-          return (
-            <Product
-              key={element.id}
-              id={element.id}
-              name={element.name}
-              image={element.image}
-              quantity={element.quantity}
-              price={element.price}
-            />
-          )
-        })}
-      </Layout>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Header />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/categories/:category" element={<Home />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/404" />} />
+          </Routes>
+        </Layout>
+      </div>
+    </BrowserRouter>
   )
 }
 
