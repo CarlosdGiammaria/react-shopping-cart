@@ -50,7 +50,7 @@ function Product({ id, name, image, quantity, price }) {
             onClick={handleAdd}
             disabled={!available}
           >
-            {  available ? 'Add to cart' : 'SOLD OUT' }
+            {  available ? 'Add to Cart' : 'SOLD OUT' }
             {  available &&  <i className='fa-solid fa-cart-plus'/>}
           </button>
         </div>

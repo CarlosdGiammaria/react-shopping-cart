@@ -1,13 +1,13 @@
 import React from 'react'
 import { useStore } from 'killa'
-import { shoppingCartStore } from '../../store'
+import { shoppingCartStore,inventoryStore } from '../../store'
 
 function CartProduct(
   { 
     id,
     name, 
     image, 
-    quantity, 
+    quantity,
     price , 
     deleteQuantity, 
   }) 
@@ -20,10 +20,18 @@ function CartProduct(
     }
   })
 
+  const [inventory] = useStore(inventoryStore, (state)=> state.articles)
+
   const handleAddQuantity = () => {
     setState((state) => {
-      const index = state.products.findIndex((product) => product.id === id)
+      let index = state.products.findIndex((product) => product.id === id)
+      let inventoryIndex = inventory.findIndex((item) => {
+        return item.id === id
+      });
+
       if (index === -1) return state
+
+      if(state.products[index].quantity >= inventory[inventoryIndex].quantity)return false
 
       const newProduct = {
         ...state.products[index],
@@ -35,7 +43,6 @@ function CartProduct(
         newProduct,
         ...state.products.slice(index + 1),
       ]
-
       const newState = {
         ...state,
         products: newProducts,
@@ -43,7 +50,7 @@ function CartProduct(
       return newState
     })
   }
-  
+
   return (
     <div className='list__items'>
       <div className='shopping-cart__card js-cart-item' data-id={id}>
