@@ -17,8 +17,9 @@ function Home() {
   let params = useParams()
 
   if (params.category) {
-    products = state.products.filter((product) => product.category.toLowerCase() === params.category)
-    console.log(products)
+    products = state.products.filter(
+      (product) => product.category.toLowerCase() === params.category
+    )
   }
   if(!products.length) {
    return <NotFound />
