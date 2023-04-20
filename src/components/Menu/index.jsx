@@ -2,6 +2,9 @@ import React from 'react'
 import { NavLink} from 'react-router-dom'
 import { useStore } from 'killa'
 import { inventoryStore } from '../../store'
+import './styles.css'
+
+
 
 const CATEGORIES_MAP = {
   'HOME_CATEGORY': 'Home use',
@@ -10,15 +13,18 @@ const CATEGORIES_MAP = {
 }
 
 function NavBar() {
-  const [categories] = useStore(inventoryStore, (state) => state.getCategories())
+  const [categories] = useStore(
+    inventoryStore, 
+    (state) => state.getCategories()
+  )
 
   return (
-    <nav className="nav">
+    <nav className='nav'>
       <ul className='nav__list'>
         <li>
           <NavLink
             to='/'
-            className='list__item'
+            className=' list__item'
             >
             Products
           </NavLink>
@@ -38,6 +44,7 @@ function NavBar() {
           })
         }
       </ul>
+      {/* <i className="fa-solid fa-bars icon menu hidden"></i> */}
     </nav>
   )
 }

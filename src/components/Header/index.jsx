@@ -25,7 +25,7 @@ const  Header = () => {
       <NavBar/>
       <div className="btn cart " onClick={handleOpenSlider}>
         <span className="">{ cart.getItems() }</span>
-        <i className="fa-sharp fa-solid fa-cart-shopping icon"/>
+        <i className="fa-sharp fa-solid fa-cart-shopping icon icon-header"/>
       </div>
       {
         slider && 

@@ -1,0 +1,25 @@
+.nav__list {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 40px;
+  list-style-type: none;
+}
+
+.nav__list .list__item {
+  display: flex;
+  text-decoration: none;
+  text-transform: uppercase;
+  align-items: baseline;
+  color: black;
+  transition: all 0.34s;
+  font-size: 13px;
+}
+
+.list__item:hover {
+  color: #f8f3f3;
+}
+
+.list__item.active {
+  color: #f8f3f3;
+}
